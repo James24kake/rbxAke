@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE KING ROBLOX – Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .dashboard-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3.5rem 1.5rem;
+      color: #fff;
+      position: relative;
+      z-index: 2;
+      animation: fadeInDash 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @keyframes fadeInDash {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .dashboard-bg-img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      background: url('https://imgur.com/dfAycJ6.png') center center/cover no-repeat;
+      opacity: 0.18;
+      pointer-events: none;
+    }
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1.5px solid rgba(0,255,178,0.12);
+      animation: fadeInDash 1.2s 0.1s backwards;
+    }
+    .dashboard-username {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00ffb2;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0,255,178,0.08);
+      animation: fadeInDash 1.2s 0.2s backwards;
+    }
+    .dashboard-balance {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #00ffb2;
+      background: rgba(0,255,178,0.08);
+      padding: 0.4em 1.2em;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,255,178,0.08);
+      animation: fadeInDash 1.2s 0.3s backwards;
+    }
+    #logout-btn {
+      background: linear-gradient(90deg, #ff4b4b 60%, #ffb200 100%);
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 0.5em 1.2em;
+      box-shadow: 0 2px 8px rgba(255,75,75,0.10);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      animation: fadeInDash 1.2s 0.4s backwards;
+    }
+    #logout-btn:hover {
+      background: linear-gradient(90deg, #ffb200 60%, #ff4b4b 100%);
+      color: #181a2a;
+      transform: scale(1.05);
+    }
+    .dashboard-nav {
+      display: flex;
+      gap: 1.5em;
+      margin-bottom: 2.5rem;
+      animation: fadeInDash 1.2s 0.5s backwards;
+    }
+    .dashboard-nav button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.6em 1.5em;
+      border-radius: 10px;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(0,255,178,0.08);
+    }
+    .dashboard-nav button.active, .dashboard-nav button:hover {
+      background: linear-gradient(90deg, #00ffb2 60%, #00c98d 100%);
+      color: #181a2a;
+      transform: scale(1.07);
+      box-shadow: 0 4px 16px rgba(0,255,178,0.12);
+    }
+    .dashboard-section {
+      background: rgba(30, 32, 44, 0.96);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+      padding: 2.5rem 2rem;
+      min-height: 220px;
+      margin-bottom: 2.5rem;
+      color: #fff;
+      animation: fadeInDash 1.2s 0.6s backwards;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .dashboard-section:hover {
+      box-shadow: 0 12px 40px rgba(0,255,178,0.10), 0 8px 32px rgba(0,0,0,0.22);
+      transform: translateY(-2px) scale(1.01);
+    }
+    .earn-tasks {
+      list-style: none;
+      padding: 0;
+      margin: 1.5em 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+    }
+    .earn-btn, .game-timer {
+      display: inline-block;
+      padding: 0.7em 1.5em;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00ffb2 60%, #00c98d 100%);
+      color: #181a2a;
+      font-weight: bold;
+      font-size: 1em;
+      text-decoration: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      border: none;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      text-align: center;
+      margin-right: 0.5em;
+      animation: fadeInDash 1.2s 0.7s backwards;
+    }
+    .earn-btn:hover {
+      background: linear-gradient(90deg, #00c98d 60%, #00ffb2 100%);
+      color: #fff;
+      transform: translateY(-2px) scale(1.04);
+    }
+    .earn-btn.disabled {
+      background: #444a5a;
+      color: #b0b0b0;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .game-list-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2em;
+      background: rgba(30,32,44,0.92);
+      border-radius: 16px;
+      padding: 1em 1.5em;
+      margin-bottom: 1.2em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      transition: box-shadow 0.2s, transform 0.2s;
+      animation: fadeInDash 1.2s 0.8s backwards;
+    }
+    .game-list-item:hover {
+      box-shadow: 0 8px 32px rgba(0,255,178,0.10), 0 2px 8px rgba(0,0,0,0.10);
+      transform: scale(1.01);
+    }
+    .game-thumb {
+      width: 90px;
+      height: 54px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      flex-shrink: 0;
+      background: #222;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .game-list-item:hover .game-thumb {
+      box-shadow: 0 4px 16px rgba(0,255,178,0.12), 0 1px 4px rgba(0,0,0,0.12);
+      transform: scale(1.04);
+    }
+    .game-timer {
+      background: rgba(0,255,178,0.08);
+      color: #00ffb2;
+      font-size: 1em;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.5em 1em;
+      margin-left: 0.5em;
+      min-width: 120px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,255,178,0.08);
+      animation: fadeInDash 1.2s 0.9s backwards;
+    }
+    #follow-profile-timer {
+      background: rgba(0,255,178,0.08);
+      color: #00ffb2;
+      font-size: 1em;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.5em 1em;
+      min-width: 100px;
+      text-align: center;
+      box-shadow: 0 1px 4px rgba(0,255,178,0.08);
+      animation: fadeInDash 1.2s 1s backwards;
+    }
+    #withdraw-form input {
+      font-size: 1em;
+      background: #181a2a;
+      color: #fff;
+      border: 1.5px solid #00ffb2;
+      transition: border 0.2s;
+    }
+    #withdraw-form input:focus {
+      border: 1.5px solid #00c98d;
+      outline: none;
+    }
+    #withdraw-btn {
+      margin-top: 0.5em;
+      font-size: 1.1em;
+      background: linear-gradient(90deg, #00ffb2 60%, #00c98d 100%);
+      color: #181a2a;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      padding: 0.7em 2em;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      animation: fadeInDash 1.2s 1.1s backwards;
+    }
+    #withdraw-btn:disabled {
+      background: #444a5a;
+      color: #b0b0b0;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    #withdraw-btn:hover:not(:disabled) {
+      background: linear-gradient(90deg, #00c98d 60%, #00ffb2 100%);
+      color: #fff;
+      transform: scale(1.04);
+    }
+    #withdraw-message {
+      font-size: 1.1em;
+      min-height: 1.5em;
+      transition: color 0.2s;
+    }
+    @media (max-width: 600px) {
+      .dashboard-container {
+        padding: 1rem 0.2rem 2rem 0.2rem;
+      }
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.7em;
+      }
+      .dashboard-nav {
+        flex-direction: column;
+        gap: 0.5em;
+      }
+      .dashboard-section {
+        padding: 1.2rem 0.7rem;
+      }
+      .game-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.7em;
+        padding: 0.7em 0.5em;
+      }
+      .game-thumb {
+        width: 100%;
+        max-width: 220px;
+        height: 80px;
+      }
+    }
+    .task-completed .earn-btn {
+      opacity: 0.6;
+      pointer-events: none;
+      background: #444a5a;
+      color: #b0b0b0;
+    }
+    .profile-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://imgur.com/kayZHYI.png') center center/cover no-repeat;
+      opacity: 0.1;
+      border-radius: 20px;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="dashboard-bg-img"></div>
+  <div class="dashboard-container">
+    <button class="hamburger" id="dashboard-hamburger" aria-label="Open menu" style="display:none;position:absolute;top:18px;right:18px;z-index:1001;background:none;border:none;">
+      <span style="display:block;width:28px;height:3px;background:#00ffb2;margin:6px 0;border-radius:2px;"></span>
+      <span style="display:block;width:28px;height:3px;background:#00ffb2;margin:6px 0;border-radius:2px;"></span>
+      <span style="display:block;width:28px;height:3px;background:#00ffb2;margin:6px 0;border-radius:2px;"></span>
+    </button>
+    <div class="dashboard-header">
+      <span class="dashboard-username" id="dashboard-username"></span>
+      <span class="dashboard-balance">Balance: <span id="robux-balance">R$0</span></span>
+      <button id="logout-btn" style="background:none;border:none;color:#ff4b4b;font-weight:bold;cursor:pointer;">Log out</button>
+    </div>
+    <nav class="dashboard-nav" id="dashboard-nav">
+      <button class="active" data-section="earn">Earn</button>
+      <button data-section="rewards">Rewards</button>
+      <button data-section="event">Event</button>
+      <button data-section="withdraw">Withdraw</button>
+      <button data-section="profile">Profile</button>
+    </nav>
+    <div id="dashboard-mobile-menu" style="display:none;position:absolute;top:60px;right:10px;z-index:1002;background:rgba(30,32,44,0.98);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.18);padding:1em 1.2em;min-width:160px;">
+      <button class="mobile-menu-btn" data-section="earn">Earn</button><br>
+      <button class="mobile-menu-btn" data-section="rewards">Rewards</button><br>
+      <button class="mobile-menu-btn" data-section="event">Event</button><br>
+      <button class="mobile-menu-btn" data-section="withdraw">Withdraw</button><br>
+      <button class="mobile-menu-btn" data-section="profile">Profile</button>
+    </div>
+    <div class="dashboard-section" id="section-earn">
+      <h2>Earn Robux</h2>
+      <p><strong>To earn Robux, you must:</strong></p>
+      <ul class="earn-tasks">
+        <li id="follow-profile-task">
+          <a href="https://www.roblox.com/users/1959890949/profile/" target="_blank" class="earn-btn" id="follow-profile-link">Follow me on Roblox</a>
+          <span id="follow-profile-timer" style="margin-left:0.7em;color:#00ffb2;font-weight:bold;"></span>
+          <span id="follow-profile-status" style="margin-left:0.7em;"></span>
+        </li>
+        <li><a href="https://www.roblox.com/communities/9447132/THE-KING-ROBLOX#!/about" target="_blank" class="earn-btn">Join my Roblox Group</a></li>
+      </ul>
+      <h3 style="margin-top:2em;">Play these Games (Earn R$10/hour)</h3>
+      <p id="dashboard-timer-note" style="color:#00ffb2;font-weight:bold;margin-bottom:0.5em;">Keep this dashboard open while you play to earn Robux!<br>You must keep this dashboard open and active (no idling) while playing to earn Robux.</p>
+      <ul class="earn-tasks" id="game-list">
+        <li class="game-list-item">
+          <img class="game-thumb" src="https://www.dexerto.com/cdn-image/wp-content/uploads/2022/05/13/vehicle-legends-codes.jpg?width=1200&quality=60&format=auto" alt="Car Legend Thumbnail" />
+          <a href="https://www.roblox.com/games/90044595662781/CAR-LEGEND" target="_blank" class="earn-btn play-game-btn" data-game="car-legend">Play CAR LEGEND</a>
+          <span class="game-timer" id="timer-car-legend" style="margin-left:0.7em;color:#00ffb2;font-weight:bold;"></span>
+        </li>
+        <li class="game-list-item">
+          <img class="game-thumb" src="https://tr.rbxcdn.com/180DAY-911cf7084e5cd20957eb30198ad07b45/768/432/Image/Webp/noFilter" alt="Ultimate Punch Battleground Thumbnail" />
+          <a href="https://www.roblox.com/games/92912694604636/Ultimate-Punch-Battleground" target="_blank" class="earn-btn play-game-btn" data-game="ultimate-punch">Play Ultimate Punch Battleground</a>
+          <span class="game-timer" id="timer-ultimate-punch" style="margin-left:0.7em;color:#00ffb2;font-weight:bold;"></span>
+        </li>
+        <li class="game-list-item">
+          <img class="game-thumb" src="https://tr.rbxcdn.com/180DAY-57390e95413324fedda39e3e68a68c2c/768/432/Image/Webp/noFilter" alt="TitanGrip Thumbnail" />
+          <a href="https://www.roblox.com/games/94422510929213/TitanGrip" target="_blank" class="earn-btn play-game-btn" data-game="titan-grip">Play TitanGrip</a>
+          <span class="game-timer" id="timer-titan-grip" style="margin-left:0.7em;color:#00ffb2;font-weight:bold;"></span>
+        </li>
+        <li class="game-list-item">
+          <img class="game-thumb" src="https://tr.rbxcdn.com/180DAY-ada39202e066e9baa186d3e3ccdeced6/768/432/Image/Webp/noFilter" alt="Scythe Sword Thumbnail" />
+          <a href="https://www.roblox.com/games/91262029312681/Scythe-Sword" target="_blank" class="earn-btn play-game-btn" data-game="scythe-sword">Play Scythe Sword</a>
+          <span class="game-timer" id="timer-scythe-sword" style="margin-left:0.7em;color:#00ffb2;font-weight:bold;"></span>
+        </li>
+        <li class="game-list-item">
+          <img class="game-thumb" src="https://tr.rbxcdn.com/180DAY-4fcde8fb1fff7d48af69f7ddd2ee514a/768/432/Image/Webp/noFilter" alt="Shadow Slayer Thumbnail" />
+          <a href="https://www.roblox.com/games/97176783366995/Shadow-Slayer" target="_blank" class="earn-btn play-game-btn" data-game="shadow-slayer">Play Shadow Slayer</a>
+          <span class="game-timer" id="timer-shadow-slayer" style="margin-left:0.7em;color:#00ffb2;font-weight:bold;"></span>
+        </li>
+        <li class="game-list-item">
+          <img class="game-thumb" src="https://tr.rbxcdn.com/180DAY-bf4bc6d92296185d5eb059a6a40b5145/768/432/Image/Webp/noFilter" alt="Superhero Flight Thumbnail" />
+          <a href="https://www.roblox.com/games/135225216190420/Supeerhero-flight" target="_blank" class="earn-btn play-game-btn" data-game="superhero-flight">Play Supeerhero flight</a>
+          <span class="game-timer" id="timer-superhero-flight" style="margin-left:0.7em;color:#00ffb2;font-weight:bold;"></span>
+        </li>
+        <li>
+          <span class="earn-btn disabled">Future Game – Coming Soon</span>
+        </li>
+      </ul>
+      <h3 style="margin-top:2em;">Like these YouTube Videos</h3>
+      <ul class="earn-tasks">
+        <li><a href="https://www.youtube.com/watch?v=0jUoOwCAA3I" target="_blank" class="earn-btn">Like Video 1</a></li>
+        <li><a href="https://www.youtube.com/watch?v=AWfzRHaKP_8" target="_blank" class="earn-btn">Like Video 2</a></li>
+        <li><a href="https://www.youtube.com/watch?v=5qhcaUq0jZk" target="_blank" class="earn-btn">Like Video 3</a></li>
+        <li><a href="https://www.youtube.com/watch?v=DykPKe8z50Y" target="_blank" class="earn-btn">Like Video 4</a></li>
+        <li><a href="https://www.youtube.com/watch?v=A2PB11aXd5Q" target="_blank" class="earn-btn">Like Video 5</a></li>
+        <li><a href="https://www.youtube.com/watch?v=NcmOKlS3H_Q" target="_blank" class="earn-btn">Like Video 6</a></li>
+        <li><a href="https://www.youtube.com/watch?v=HdS4USeltK4" target="_blank" class="earn-btn">Like Video 7</a></li>
+      </ul>
+    </div>
+    <div class="dashboard-section" id="section-rewards" style="display:none;">
+      <h2>Rewards & Promocodes</h2>
+      <form id="promo-form" style="margin-top:1em;">
+        <label for="promo-code">Enter promo code:</label><br>
+        <input type="text" id="promo-code" name="promo-code" style="margin:0.5em 0 1em 0;padding:0.5em;border-radius:6px;border:none;" required>
+        <button type="submit" id="promo-btn" class="earn-btn">Redeem</button>
+      </form>
+      <div id="promo-message" style="margin-top:1em;font-weight:bold;"></div>
+      <p style="margin-top:2em;color:#00ffb2;">Each valid promo code rewards R$15. Codes can only be used once per user.</p>
+      <div style="margin-top:1.5em; color:#fff; font-size:1.1em;">
+        <strong>Promo Code Info:</strong><br>
+        The codes will be posted on my YouTube channel.<br>
+        Make sure to check my YouTube for updates of codes.<br>
+        <a href="https://www.youtube.com/@Jasm29998" target="_blank" style="color:#00ffb2; font-weight:bold; text-decoration:underline; display:inline-block; margin-top:0.5em;">🔗 Visit my YouTube Channel</a>
+      </div>
+    </div>
+    <div class="dashboard-section" id="section-event" style="display:none;">
+      <h2>Current Events</h2>
+      <ul>
+        <li><strong>Double Robux Weekend!</strong> Earn 2x Robux for every hour played in any game this weekend only!</li>
+        <li><strong>Promo Code Hunt:</strong> New codes will be hidden in our latest YouTube videos. Watch closely and redeem for extra Robux!</li>
+        <li><strong>Robux Giveaway:</strong> Enter your username below for a chance to win R$100. Winner announced every Friday!</li>
+      </ul>
+      <a href="https://www.youtube.com/@Jasm29998" target="_blank" style="color:#00ffb2; font-weight:bold; text-decoration:underline;">Check our YouTube for event updates!</a>
+    </div>
+    <div class="dashboard-section" id="section-withdraw" style="display:none;">
+      <h2>Withdraw Robux</h2>
+      <div style="margin-bottom:1.5em;">
+        <a href="https://www.roblox.com/users/1959890949/profile/" target="_blank" class="earn-btn" style="font-size:1.15em;padding:1em 2em;background:linear-gradient(90deg,#00ffb2 60%,#00c98d 100%);color:#181a2a;display:inline-block;margin-bottom:0.7em;">Add Admin as Friend</a>
+        <div style="color:#00ffb2;font-size:1.1em;font-weight:600;max-width:600px;line-height:1.5;">
+          <span style="font-size:1.3em;">ℹ️</span> To receive your Robux, <b>add the admin as a friend on Roblox</b>. Once you've added, submit your withdrawal request and the admin will donate to you.
+        </div>
+      </div>
+      <p>Your current balance: <span id="withdraw-balance">R$0</span></p>
+      <form id="withdraw-form" style="margin-top:1em;">
+        <label for="withdraw-username">Confirm your Roblox username:</label><br>
+        <input type="text" id="withdraw-username" name="withdraw-username" style="margin:0.5em 0 1em 0;padding:0.5em;border-radius:6px;border:none;" required><br>
+        <label for="withdraw-amount">Amount to withdraw (min R$10):</label><br>
+        <input type="number" id="withdraw-amount" name="withdraw-amount" min="10" step="1" style="margin:0.5em 0 1em 0;padding:0.5em;border-radius:6px;border:none;width:120px;" required><br>
+        <button type="submit" id="withdraw-btn" class="earn-btn" disabled>Withdraw</button>
+      </form>
+      <div id="withdraw-message" style="margin-top:1em;font-weight:bold;"></div>
+      <div style="margin-top:2em;">
+        <h3 style="color:#00ffb2; margin-bottom:0.5em;">How to Create a Gamepass for Withdrawals</h3>
+        <p style="color:#fff; margin-bottom:1em;">Need help creating a gamepass and setting the price to match your withdrawal amount? Watch this step-by-step guide:</p>
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.10);">
+          <iframe src="https://www.youtube.com/embed/StNXJlRIyxE" title="How to Create a Gamepass by Chad Reddings" frameborder="0" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;"></iframe>
+        </div>
+        <a href="https://www.youtube.com/watch?v=StNXJlRIyxE&ab_channel=ChadReddings" target="_blank" style="display:block;margin-top:0.7em;color:#00ffb2;font-weight:bold;text-align:center;text-decoration:underline;font-size:1.08em;">🔗 Watch on YouTube (open in app)</a>
+      </div>
+    </div>
+    <div class="dashboard-section" id="section-profile" style="display:none;">
+      <div class="profile-bg-img"></div>
+      <h2>Profile</h2>
+      <div class="profile-welcome">👋 Welcome, <span id="profile-username"></span>!</div>
+      <div class="profile-desc">This is your profile page on THE KING ROBLOX.</div>
+      <div style="margin-bottom:1em;">
+        <strong>Your Roblox Username:</strong> <span id="profile-roblox-username"></span>
+      </div>
+      <div style="margin-bottom:1em;">
+        <strong>Your Current Balance:</strong> <span id="profile-balance"></span>
+      </div>
+      <div class="profile-thankyou">
+        Thank you for being part of our community! Complete tasks, play games, and earn more Robux every day.
+      </div>
+      <div class="profile-rewards-link">
+        Stay awesome, and enjoy your rewards!
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html> 

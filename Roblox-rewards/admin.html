@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE KING ROBLOX – Admin Panel</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #232533 0%, #181a2a 100%);
+      min-height: 100vh;
+      color: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .admin-container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: rgba(30, 32, 44, 0.98);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+      padding: 2.5rem 2rem 2.5rem 2rem;
+      animation: fadeInDash 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    h1 {
+      color: #00ffb2;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .admin-login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2em;
+      margin-bottom: 2.5em;
+    }
+    .admin-login-form input {
+      padding: 0.7em 1.2em;
+      border-radius: 8px;
+      border: none;
+      font-size: 1.1em;
+      background: #181a2a;
+      color: #fff;
+      outline: none;
+      border: 1.5px solid #00ffb2;
+      transition: border 0.2s;
+    }
+    .admin-login-form input:focus {
+      border: 1.5px solid #00c98d;
+    }
+    .admin-login-form button {
+      padding: 0.7em 2em;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00ffb2 60%, #00c98d 100%);
+      color: #181a2a;
+      font-weight: bold;
+      font-size: 1.1em;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .admin-login-form button:hover {
+      background: linear-gradient(90deg, #00c98d 60%, #00ffb2 100%);
+      color: #fff;
+      transform: scale(1.04);
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2em;
+      background: rgba(20, 22, 34, 0.98);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,255,178,0.08);
+    }
+    .admin-table th, .admin-table td {
+      padding: 1em 0.7em;
+      text-align: left;
+      border-bottom: 1px solid #222;
+    }
+    .admin-table th {
+      background: #00ffb2;
+      color: #181a2a;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+    .admin-table td {
+      font-size: 1em;
+      color: #fff;
+    }
+    .admin-table tr:hover td {
+      background: rgba(0,255,178,0.06);
+    }
+    .admin-logout {
+      margin-top: 2em;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .admin-logout button {
+      background: #ff4b4b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5em 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .admin-logout button:hover {
+      background: #ffb200;
+      color: #181a2a;
+    }
+    @media (max-width: 600px) {
+      .admin-container {
+        padding: 1rem 0.2rem 2rem 0.2rem;
+      }
+      .admin-table th, .admin-table td {
+        padding: 0.7em 0.3em;
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <h1>Admin Panel</h1>
+    <form class="admin-login-form" id="admin-login-form">
+      <input type="password" id="admin-password" placeholder="Enter admin password" required />
+      <button type="submit">Login</button>
+      <div id="admin-login-message" style="color:#ff4b4b;font-weight:bold;"></div>
+    </form>
+    <div id="admin-content" style="display:none;">
+      <h2 style="color:#00ffb2;">User Earnings</h2>
+      <table class="admin-table" id="user-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Total Earned (R$)</th>
+            <th>Current Balance (R$)</th>
+            <th>Total Withdrawn (R$)</th>
+          </tr>
+        </thead>
+        <tbody id="user-table-body">
+        </tbody>
+      </table>
+      <h2 style="color:#00ffb2;margin-top:2em;">Withdrawal Requests</h2>
+      <table class="admin-table" id="withdraw-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Amount</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="withdraw-table-body">
+        </tbody>
+      </table>
+      <div class="admin-logout">
+        <button id="admin-logout-btn">Logout</button>
+      </div>
+    </div>
+  </div>
+  <script src="admin.js"></script>
+</body>
+</html> 
