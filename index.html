@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE KING ROBLOX – Earn Free Robux</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background"></div>
+  <nav class="navbar">
+    <div class="nav-content" id="nav-content">
+      <div class="logo">
+        <span class="logo-circle"><img src="https://imgur.com/IKcSIfb.png" alt="Logo" style="width:2em;height:2em;border-radius:50%;object-fit:cover;vertical-align:middle;" /></span>
+        <span class="logo-text">THE KING ROBLOX</span>
+      </div>
+      <button id="hamburger-btn" class="hamburger" aria-label="Open navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#">Earn Robux</a></li>
+        <li><a href="#">Rewards & Promocodes</a></li>
+        <li><a href="#">Event</a></li>
+        <li><a href="#" id="admin-panel-link">Admin Panel</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-btn get-started" id="nav-get-started">Get started</button>
+      </div>
+    </div>
+  </nav>
+  <section class="mobile-hero">
+    <div class="mobile-hero-content">
+      <div class="mobile-hero-icon">🕹️</div>
+      <h2>Get Started</h2>
+      <p>Earn free Robux by playing games, joining groups, and completing fun tasks. Start your Robux journey now!</p>
+      <button class="mobile-hero-btn about-cta about-animate" id="mobile-get-started">Get Started</button>
+    </div>
+  </section>
+  <div class="main-flex">
+    <section class="about-center about-animate">
+      <h1>Earn Free Robux by Playing!</h1>
+      <p>Welcome to <strong>THE KING ROBLOX</strong> – the ultimate platform where you can earn Robux just by playing your favorite Roblox games, joining groups, and supporting our community. Complete fun tasks, climb the leaderboard, and unlock awesome rewards. Start your Robux journey now!</p>
+      <a href="#" class="about-cta about-animate" id="get-started-btn">Start Earning Robux</a>
+    </section>
+  </div>
+  <div id="username-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <h2>Enter your Roblox Username</h2>
+      <form id="username-form">
+        <input type="text" id="roblox-username" name="roblox-username" placeholder="Roblox Username" required />
+        <button type="submit">Continue</button>
+      </form>
+    </div>
+  </div>
+  <div id="confirm-username-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h2>Confirm Username</h2>
+      <p id="confirm-username-text" style="margin-bottom:1.5em;"></p>
+      <button id="confirm-username-btn" class="nav-btn get-started" style="margin-right:1em;">Yes, this is me</button>
+      <button id="cancel-username-btn" class="nav-btn login">Cancel</button>
+    </div>
+  </div>
+  <div id="admin-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h2>Admin Login</h2>
+      <input type="password" id="admin-modal-password" placeholder="Enter admin password" style="margin-bottom:1em;padding:0.7em 1.2em;border-radius:8px;border:1.5px solid #00ffb2;background:#181a2a;color:#fff;outline:none;" />
+      <div style="margin-bottom:1em;"></div>
+      <button id="admin-modal-login-btn" class="nav-btn get-started" style="margin-right:1em;">Login</button>
+      <button id="admin-modal-cancel-btn" class="nav-btn login">Cancel</button>
+      <div id="admin-modal-message" style="color:#ff4b4b;font-weight:bold;margin-top:1em;"></div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const getStartedBtn = document.getElementById('get-started-btn');
+      const navGetStartedBtn = document.getElementById('nav-get-started');
+      const modal = document.getElementById('username-modal');
+      const closeModal = document.getElementById('close-modal');
+      const usernameForm = document.getElementById('username-form');
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const navContent = document.getElementById('nav-content');
+      const mobileGetStartedBtn = document.getElementById('mobile-get-started');
+      const confirmModal = document.getElementById('confirm-username-modal');
+      const confirmText = document.getElementById('confirm-username-text');
+      const confirmBtn = document.getElementById('confirm-username-btn');
+      const cancelBtn = document.getElementById('cancel-username-btn');
+      const adminPanelLink = document.getElementById('admin-panel-link');
+      const adminModal = document.getElementById('admin-modal');
+      const adminModalPassword = document.getElementById('admin-modal-password');
+      const adminModalLoginBtn = document.getElementById('admin-modal-login-btn');
+      const adminModalCancelBtn = document.getElementById('admin-modal-cancel-btn');
+      const adminModalMessage = document.getElementById('admin-modal-message');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      let pendingUsername = '';
+
+      function openModal(e) {
+        e.preventDefault();
+        modal.style.display = 'flex';
+      }
+      if (getStartedBtn) getStartedBtn.addEventListener('click', openModal);
+      if (navGetStartedBtn) navGetStartedBtn.addEventListener('click', openModal);
+      if (mobileGetStartedBtn) mobileGetStartedBtn.addEventListener('click', openModal);
+      if (closeModal) closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+      if (adminPanelLink) {
+        adminPanelLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          adminModal.style.display = 'flex';
+          adminModalPassword.value = '';
+          adminModalMessage.textContent = '';
+        });
+      }
+      if (adminModalCancelBtn) {
+        adminModalCancelBtn.addEventListener('click', function() {
+          adminModal.style.display = 'none';
+        });
+      }
+      if (adminModalLoginBtn) {
+        adminModalLoginBtn.addEventListener('click', function() {
+          if (adminModalPassword.value === 'Ake-site-come') {
+            window.location.href = 'admin.html';
+          } else {
+            adminModalMessage.textContent = 'Incorrect password.';
+          }
+        });
+      }
+      window.onclick = function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+        if (event.target === confirmModal) {
+          confirmModal.style.display = 'none';
+        }
+        if (event.target === adminModal) {
+          adminModal.style.display = 'none';
+        }
+      };
+      if (usernameForm) usernameForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const username = document.getElementById('roblox-username').value.trim();
+        if (username) {
+          pendingUsername = username;
+          confirmText.textContent = `Are you sure this is you?  "${username}"`;
+          confirmModal.style.display = 'flex';
+        }
+      });
+      if (confirmBtn) confirmBtn.addEventListener('click', function() {
+        if (pendingUsername) {
+          localStorage.setItem('robloxUsername', pendingUsername);
+          window.location.href = 'dashboard.html';
+        }
+      });
+      if (cancelBtn) cancelBtn.addEventListener('click', function() {
+        confirmModal.style.display = 'none';
+        pendingUsername = '';
+      });
+      if (hamburgerBtn) hamburgerBtn.addEventListener('click', function() {
+        navContent.classList.toggle('mobile-nav-open');
+      });
+      // Helper: check if user is logged in
+      function isLoggedIn() {
+        return !!localStorage.getItem('robloxUsername');
+      }
+      // Intercept Rewards & Promocodes and Event links
+      navLinks.forEach(link => {
+        if (link.textContent.includes('Rewards') || link.textContent.includes('Event')) {
+          link.addEventListener('click', function(e) {
+            if (!isLoggedIn()) {
+              e.preventDefault();
+              modal.style.display = 'flex';
+            }
+          });
+        }
+      });
+      // Hamburger/mobile nav: intercept Rewards & Promocodes and Event
+      document.addEventListener('click', function(e) {
+        if (e.target.matches('.nav-links a, .mobile-nav-open .nav-links a')) {
+          if ((e.target.textContent.includes('Rewards') || e.target.textContent.includes('Event')) && !isLoggedIn()) {
+            e.preventDefault();
+            modal.style.display = 'flex';
+          }
+        }
+      }, true);
+    });
+  </script>
+</body>
+</html> 
